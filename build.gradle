@@ -1,0 +1,63 @@
+    
+plugins {
+  // Apply the java-library plugin to add support for Java Library
+  id 'java-library'
+  id 'application'
+  id 'eclipse' // (to generate Eclipse project files)
+  id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+	runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:win"
+	runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:linux"
+	runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:mac"
+	implementation 'org.controlsfx:controlsfx:11.0.1'
+	
+	// TEST
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
+	testCompile 'org.mockito:mockito-core:3.0.0'
+    
+    // TestFX - Used with JUnit for running unittests on GUI components, simulating real user interactions with the software.
+    testCompile "org.testfx:testfx-core:4.0.+"
+	testCompile "org.testfx:testfx-junit:4.0.+"
+    
+    // LOGGING 
+    // Log4J, used to logg, and store to file, different levels of information from the software during runtime.
+	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.8.2'
+  	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.8.2'
+}
+
+javafx {
+    version = "13.0.2"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+run {
+    if (javafx.platform.classifier == 'win') {
+        // Temporal fix for Eclipse with JDK 1.8 and Windows 
+        systemProperty "java.library.path", "C:\tmp"
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+jar {
+    manifest {
+        attributes 'Main-Class': 'ActivityTracker.Launcher'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+mainClassName = 'ActivityTracker.Main'
