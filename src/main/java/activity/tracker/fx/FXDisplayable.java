@@ -1,4 +1,4 @@
-package activity.tracker.database.dto;
+package activity.tracker.fx;
 
 public interface FXDisplayable {
 	public String getDisplayableName();

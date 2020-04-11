@@ -2,6 +2,8 @@ package activity.tracker.database.dto;
 
 import java.sql.Date;
 
+import activity.tracker.fx.FXDisplayable;
+
 public class ActivityRecord implements FXDisplayable {
 
 	private final long recordId;

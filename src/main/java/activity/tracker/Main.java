@@ -30,7 +30,9 @@ public class Main extends Application {
 			final VBox root = (VBox) loader.load();
 			final Stage stage = new Stage();
 			stage.setTitle("Activity Tracker");
-			stage.setScene(new Scene(root));
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(Main.class.getResource("/gui/css/style.css").toExternalForm());
+			stage.setScene(scene);
 
 			stage.show();
 		} catch (final Exception e) {

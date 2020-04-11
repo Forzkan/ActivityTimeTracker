@@ -9,14 +9,32 @@ import java.sql.Statement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import activity.tracker.database.ActivityDatabaseHelper;
+
 public class DatabaseConnectionImpl implements DatabaseConnection {
 
 	private final Logger LOGGER = LogManager.getLogger(DatabaseConnectionImpl.class);
 
 	private final String database;
+	private final ActivityDatabaseHelper activityHelper = new ActivityDatabaseHelper();
 
-	public DatabaseConnectionImpl(String aDatabasePath) {
+	public DatabaseConnectionImpl(String aDatabasePath, boolean aCreate) {
 		database = stringPathToConnectionString(aDatabasePath);
+		// Create a new database if one does not exist.. if aCreate is true.
+		if (aCreate && connect() == null) {
+			createNewDatabase();
+		}
+	}
+
+	/**
+	 * Creates a new database in the database folder. At present, the database will
+	 * always be created in the database folder in the project root directory.
+	 *
+	 * @param fileName the database file name
+	 */
+	@Override
+	public boolean createNewDatabase() {
+		return exexuteStatement(activityHelper.createActivityTableQuery());
 	}
 
 	@Override
@@ -30,7 +48,6 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
 				LOGGER.debug("The driver name is " + meta.getDriverName());
 				stmt.execute(aStatement);
 			}
-
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return false;
@@ -43,7 +60,8 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
 		return "jdbc:sqlite:" + aDatabasePath.toString();
 	}
 
-	private Connection connect() {
+	@Override
+	public Connection connect() {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(database);
@@ -63,5 +81,6 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
 	public boolean verifyConnection() {
 		return connect() != null ? true : false;
 	}
+
 
 }

@@ -1,7 +1,7 @@
 package activity.tracker.fx.component;
 
 import activity.tracker.controller.MainController;
-import activity.tracker.database.dto.FXDisplayable;
+import activity.tracker.fx.FXDisplayable;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;

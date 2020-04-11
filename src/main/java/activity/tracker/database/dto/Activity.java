@@ -1,8 +1,10 @@
 package activity.tracker.database.dto;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import activity.tracker.fx.FXDisplayable;
 
 // Immutable Activity Object.
 public class Activity implements FXDisplayable {
@@ -16,15 +18,16 @@ public class Activity implements FXDisplayable {
 
 	private final List<ActivityRecord> activityRecords = new ArrayList<ActivityRecord>();
 
-	public Activity(long aActivityId, String aActivityName, String aDescription, Date aCreatedDate,
-			Date aLastTrackedDate, int aTotalMinutesTracked) {
+	public Activity(long aActivityId, String aActivityName, String aDescription, Date date, Date date2,
+			int aTotalMinutesTracked) {
 		activityId = aActivityId;
 		activityName = aActivityName;
 		description = aDescription;
-		createdDate = aCreatedDate;
-		lastTrackedDate = aLastTrackedDate;
+		createdDate = date;
+		lastTrackedDate = date2;
 		totalMinutesTracked= aTotalMinutesTracked;
 	}
+
 
 	/**
 	 * @return the activityId
@@ -99,7 +102,7 @@ public class Activity implements FXDisplayable {
 	 * @return information of the <code>Activity</code> as a formated <code>String</code>.
 	 */
 	public String activityInformationToString() {
-		return String.format("(id: {0}) name: {1}\n{2}\nCreated:{3}\nLast Updated:{4}", activityId, activityName,
+		return String.format("(id: {%s}) name: {%s}\n{%s}\nCreated:{%s}\nLast Updated:{%s}", activityId, activityName,
 				description, createdDate.toString(), lastTrackedDate.toString());
 	}
 

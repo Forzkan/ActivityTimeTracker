@@ -46,6 +46,8 @@ public class ActivityHandler {
 	}
 
 	public void onStartActivity(String aActivityName) {
+		// if one existing activity was running, then create a new entry.
+
 		// Check if activity name is not the same as the current activity and not empty
 		// string, if it is then we do nothing..
 		if (aActivityName.strip().isEmpty()
@@ -55,14 +57,31 @@ public class ActivityHandler {
 		}
 		// else... check if exist in history and if so, add activityRecord and update
 		// activity minutes and lastActiveDate.
+		Activity existingActivity = dbHandler.getActivityOnName(aActivityName);
+		if (existingActivity != null) {
+			// get the activity form the database...
+			currentActivity.set(existingActivity);
+			// set the currentActivity to the one to start..
 
-		// otherwise, create a new activity only.
-		addNewActivityToDatabase(aActivityName);
-		currentActivity.set(createNewActivity(aActivityName));
+			// STart that activity.
+
+		} else {
+			// otherwise, create a new activity only.
+			Activity newActivty = addNewActivityToDatabase(aActivityName);
+			System.out.println(newActivty.activityInformationToString());
+			activityHistory.add(newActivty);
+			currentActivity.set(newActivty);
+		}
+
+		// currentActivity.set(createNewActivity(aActivityName));
 		startActivityTimer();
 	}
 
+
 	private void startActivityTimer() {
+		if (timer != null) {
+			timer.cancel();
+		}
 		timer = new Timer();
 		System.out.println("STARTING TIMER");
 		timer.scheduleAtFixedRate(new TimerTask() {
@@ -80,9 +99,9 @@ public class ActivityHandler {
 		}, 0, 60000);
 	}
 
-	private void addNewActivityToDatabase(String aActivityName) {
-		// Remember to add it to the list of activities instead of fetching it again..
-		// TODO::
+	private Activity addNewActivityToDatabase(String aActivityName) {
+		System.out.println("Starting new activity with the name: " + aActivityName);
+		return dbHandler.insertNewActivity(aActivityName, "Test description...");
 	}
 
 	private Activity createNewActivity(String aActivityName) {

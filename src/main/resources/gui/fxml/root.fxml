@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root-vbox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox fillHeight="false">
          <children>
@@ -22,7 +22,7 @@
             <HBox>
                <children>
                   <CustomTextField fx:id="currentActivityTextField" prefWidth="350.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" text="Start" />
+                  <Button fx:id="newActivityBtn" mnemonicParsing="false" styleClass="primary-action-button" text="Start" />
                </children>
             </HBox>
             <HBox>

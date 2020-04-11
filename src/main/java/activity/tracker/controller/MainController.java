@@ -1,11 +1,13 @@
 package activity.tracker.controller;
 
 import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.control.textfield.TextFields;
 
 import activity.tracker.database.DatabaseHandler;
 import activity.tracker.database.dto.Activity;
 import activity.tracker.properties.PropertiesHandler;
+import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
+import impl.org.controlsfx.autocompletion.SuggestionProvider;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -33,8 +35,16 @@ public class MainController { // TODO:: pauseBtn, still want to pause - reminder
 	private final PropertiesHandler properties = new PropertiesHandler();
 
 	public MainController() {
-		dbHandler = new DatabaseHandler(properties);
+		dbHandler = new DatabaseHandler(properties, "testDatabase.db");
 		activityHandler = new ActivityHandler(properties, dbHandler);
+		// TODO:: Get database information, and send it to the database handler for it
+		// to verify that it exists, can be connected to and more..
+		// For now the name is hard coded..
+		if (dbHandler.verifyDatabaseConnection()) {
+			System.out.println("DATABASE CONNECTION VERIFIED.");
+
+		}
+
 	}
 
 	@FXML
@@ -45,10 +55,17 @@ public class MainController { // TODO:: pauseBtn, still want to pause - reminder
 		setTextFieldOnEnterPressed();
 		minutesLabel.textProperty().bindBidirectional(activityHandler.activeMinutesProperty(),
 				new NumberStringConverter());
+		newActivityBtn.setOnAction(e -> activityHandler.onStartActivity(currentActivityTextField.getText()));
 	}
 
 	private void fillAutoCompleteTextfield(ObservableList<Activity> activityHistory) {
-		TextFields.bindAutoCompletion(currentActivityTextField, activityHistory);
+		// TextFields.bindAutoCompletion(currentActivityTextField, activityHistory);
+		SuggestionProvider<Activity> suggestionProvider = SuggestionProvider.create(activityHistory);
+		new AutoCompletionTextFieldBinding<>(currentActivityTextField, suggestionProvider);
+		activityHistory.addListener((Change<? extends Activity> changes) -> {
+			suggestionProvider.clearSuggestions();
+			suggestionProvider.addPossibleSuggestions(activityHistory);
+		});
 	}
 
 	private void setTextFieldOnEnterPressed() {

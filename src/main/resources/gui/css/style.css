@@ -1,0 +1,34 @@
+* {
+	-fx-color-backgrond:#121212; /* DARK GREY */
+	-fx-color-background-2:#212121;
+	-fx-color-font-1:white;	
+}
+
+.root, .label{
+	-fx-text-fill: white;
+	-fx-font-weight:bold;	
+}
+
+.root-vbox{
+	-fx-background-color:-fx-color-backgrond;
+}
+
+.text-field{
+	-fx-background-color:-fx-color-background-2;
+	-fx-boder-color:TRANSPARENT;
+	-fx-text-fill:white;
+	-fx-font-size:1.1em;
+}
+
+.button{
+	-fx-background-color:black;
+	-fx-font-weight:bold;
+	-fx-text-fill:white;
+	/* secondary color variant */
+	-fx-background-color:#03DAC5;
+}
+
+.primary-action-button{
+	/* main color variant */
+	-fx-background-color:#BB86FC;
+}

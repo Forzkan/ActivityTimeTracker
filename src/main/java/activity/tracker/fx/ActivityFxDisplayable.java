@@ -1,6 +1,5 @@
 package activity.tracker.fx;
 
-import activity.tracker.database.dto.FXDisplayable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
