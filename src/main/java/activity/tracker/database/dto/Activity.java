@@ -1,8 +1,10 @@
 package activity.tracker.database.dto;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import activity.tracker.fx.FXDisplayable;
 
@@ -12,20 +14,23 @@ public class Activity implements FXDisplayable {
 	private final long activityId;
 	private final String activityName;
 	private final String description;
-	private final Date createdDate;
-	private final Date lastTrackedDate;
+	private final LocalDateTime createdDate;
+	private final LocalDateTime lastTrackedDate;
 	private final int totalMinutesTracked;
-
+	private final boolean favorite;
+	private final String iconLiteral = "dashicons-tag";
 	private final List<ActivityRecord> activityRecords = new ArrayList<ActivityRecord>();
 
-	public Activity(long aActivityId, String aActivityName, String aDescription, Date date, Date date2,
-			int aTotalMinutesTracked) {
+	public Activity(long aActivityId, String aActivityName, String aDescription, LocalDateTime date,
+			LocalDateTime date2,
+			int aTotalMinutesTracked, boolean aFavorite) {
 		activityId = aActivityId;
 		activityName = aActivityName;
 		description = aDescription;
 		createdDate = date;
 		lastTrackedDate = date2;
 		totalMinutesTracked= aTotalMinutesTracked;
+		favorite = aFavorite;
 	}
 
 
@@ -53,14 +58,14 @@ public class Activity implements FXDisplayable {
 	/**
 	 * @return the createdDate
 	 */
-	public Date getCreatedDate() {
+	public LocalDateTime getCreatedDate() {
 		return createdDate;
 	}
 
 	/**
 	 * @return the lastTrackedDate
 	 */
-	public Date getLastTrackedDate() {
+	public LocalDateTime getLastTrackedDate() {
 		return lastTrackedDate;
 	}
 
@@ -146,4 +151,13 @@ public class Activity implements FXDisplayable {
 	}
 
 
+	public boolean isFavorite() {
+		return favorite;
+	}
+
+	@Override
+	public FontIcon getDisplayableIcon() {
+		return new FontIcon(iconLiteral);
+
+	}
 }

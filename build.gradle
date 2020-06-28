@@ -9,6 +9,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -18,11 +19,18 @@ dependencies {
 	runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:mac"
 	implementation 'org.controlsfx:controlsfx:11.0.1'
 	
+	// Icons
+    compile 'org.kordamp.ikonli:ikonli-javafx:2.4.0'
+	compile 'org.kordamp.ikonli:ikonli-dashicons-pack:2.4.0'
+	
 	// DATABASE Apache Derby
 	// https://mvnrepository.com/artifact/org.apache.derby/derby
 	//testCompile group: 'org.apache.derby', name: 'derby', version: '10.15.2.0'
 	// For now its SQLite
 	compile files('external/java/sqlite-jdbc-3.27.2.1.jar')
+	// My own little library with javafx components.
+	compile files('external/java/components4jfx-0.1.1.jar')
+	
 	
 	// TEST
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.1'

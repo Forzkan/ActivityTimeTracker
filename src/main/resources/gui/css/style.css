@@ -1,7 +1,18 @@
 * {
-	-fx-color-backgrond:#121212; /* DARK GREY */
-	-fx-color-background-2:#212121;
-	-fx-color-font-1:white;	
+	-fx-color-background:#121212; /* DARK GREY */
+	-fx-color-background-2:#171717;
+	-fx-color-font-1:white;
+	-fx-control-inner-background:#212121;
+	-fx-background:#121212;
+	-fx-accent:	#BB86FC;
+	-fx-selection-bar:#BB86FC;
+	-fx-selection-bar-non-focused:#e2c9ff;
+}
+
+/* #53ADF3;
+#257EDC; */
+.root{
+	-fx-background-color:TRANSPARENT;
 }
 
 .root, .label{
@@ -10,25 +21,95 @@
 }
 
 .root-vbox{
-	-fx-background-color:-fx-color-backgrond;
+	-fx-background-color:-fx-color-background;
+	-fx-padding:0.2em;
 }
 
 .text-field{
-	-fx-background-color:-fx-color-background-2;
+	-fx-background-color:-fx-color-background;
 	-fx-boder-color:TRANSPARENT;
 	-fx-text-fill:white;
 	-fx-font-size:1.1em;
+	-fx-font-weight:normal;
+	-fx-padding:0;
+	-fx-border-insets:0;
+	-fx-min-width:0.1em;
+	-fx-min-height:1.5em;
 }
 
 .button{
 	-fx-background-color:black;
 	-fx-font-weight:bold;
 	-fx-text-fill:white;
-	/* secondary color variant */
-	-fx-background-color:#03DAC5;
+	/* secondary color variant 
+	-fx-background-color:#03DAC5;*/
+	-fx-background-color:TRANSPARENT;
+	-fx-padding:0;
+	-fx-border-insets:0;
+	
+	-fx-pref-width:2.4em;
+	-fx-pref-height:2.4em;
+	
 }
+
+.button:hover{
+	-fx-padding:0;
+	-fx-border-insets:0;
+	-fx-pref-width:1.2em;
+	-fx-pref-height:1.2em;
+	-fx-opacity: 0.5;
+	-fx-pref-width:2.4em;
+	-fx-pref-height:2.4em;
+}
+
+.bottom-hbox{
+	-fx-padding:1em 0.3em 0.3em 0.3em;
+}
+
+.section{
+	-fx-padding:1em 0.4em 0.4em 0.4em;
+	-fx-background-color:-fx-color-background-2;
+	-fx-border-color:-fx-color-background;
+	-fx-border-thickness:2px;
+}
+
+.spacing{
+	-fx-spacing:0.5em;
+}
+
 
 .primary-action-button{
 	/* main color variant */
 	-fx-background-color:#BB86FC;
 }
+
+.primary-action-button:hover{
+	-fx-opacity:0.80;
+}
+
+
+.title{
+	-fx-font-size:1.5em;
+	-fx-font-weight:bolder;
+}
+
+.h1{
+	-fx-font-size:1.1em;
+}
+
+#favorites-root-vbox{
+	-fx-padding:1em, 0.3em 0.3em 0.3em;
+}
+
+#favorites-list-view{
+	-fx-background-color:transparent;
+	
+}
+
+
+#minutesLabel{
+	-fx-font-size:1.3em;
+	-fx-font-weight:bolder;
+}
+
+

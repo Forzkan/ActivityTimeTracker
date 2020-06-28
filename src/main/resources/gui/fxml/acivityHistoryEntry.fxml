@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox fx:id="activityRootBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="deleteButton" mnemonicParsing="false">
+               <graphic>
+                  <FontIcon iconLiteral="dashicons-trash" iconSize="14" />
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Total time spent on activity" />
+               </tooltip>
+            </Button>
+            <Label fx:id="nameLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="activityname" HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false">
+               <graphic>
+                  <FontIcon fx:id="timeIcon" iconLiteral="dashicons-clock" iconSize="14" />
+               </graphic>
+            </Button>
+            <Label fx:id="timeSpentLabel" maxHeight="1.7976931348623157E308" text="hh:mm:ss" />
+            <Button fx:id="favoriteButton" mnemonicParsing="false">
+               <graphic>
+                  <FontIcon fx:id="favoriteIcon" iconLiteral="dashicons-star-empty" iconSize="14" />
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Total time spent on activity" />
+               </tooltip>
+            </Button>
+         </children>
+      </HBox>
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+         <children>
+            <FontIcon iconLiteral="dashicons-calendar-alt" iconSize="18" wrappingWidth="18.0" HBox.hgrow="ALWAYS" />
+            <Label fx:id="createdDateLabel" maxHeight="1.7976931348623157E308" text="yyyy-mm-dd hh:mm:ss">
+               <tooltip>
+                  <Tooltip text="Created date" />
+               </tooltip>
+            </Label>
+            <Region maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+            <FontIcon fx:id="editedDateLabel" iconLiteral="dashicons-edit" iconSize="18" wrappingWidth="18.0" />
+            <Label fx:id="lastActiveDateLabel" maxHeight="1.7976931348623157E308" text="yyyy-mm-dd hh:mm:ss">
+               <tooltip>
+                  <Tooltip text="Last date when active" />
+               </tooltip>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</VBox>

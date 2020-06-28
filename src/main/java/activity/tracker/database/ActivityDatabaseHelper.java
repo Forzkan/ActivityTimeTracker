@@ -5,7 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import activity.tracker.database.dto.Activity;
@@ -20,15 +21,12 @@ public class ActivityDatabaseHelper {
 	private static final String createdDate = "createdDate";
 	private static final String lastTrackedDate = "lastTrackedDate";
 	private static final String totalMinutesTracked = "totalMinutesTracked";
+	private static final String favorite = "favorite";
+	private static final String DATE_FORMAT = "MMM d, yyyy HH:mm a";
+	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
 	public String createActivityTableQuery() {
-
-		String sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (\n " + id + " INTEGER PRIMARY KEY AUTOINCREMENT,\n "
-				+ name
-				+ " varchar NOT NULL,\n " + description + " text DEFAULT '',\n " + createdDate
-				+ " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n " + lastTrackedDate
-				+ " DATETIME DEFAULT CURRENT_TIMESTAMP, \n " + totalMinutesTracked + " INTEGER DEFAULT 0 \n " + ");";
-		System.out.println(sql);
+		// formatter = new SimpleDateFormat(DATE_FORMAT);
 
 		StringBuilder query = new StringBuilder();
 
@@ -38,23 +36,20 @@ public class ActivityDatabaseHelper {
 		query.append(description + " text DEFAULT '',");
 		query.append(createdDate + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,");
 		query.append(lastTrackedDate + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,");
-		query.append(totalMinutesTracked + " INTEGER DEFAULT 0");
+		query.append(totalMinutesTracked + " INTEGER DEFAULT 0,");
+		query.append(favorite + " INTEGER DEFAULT 0");
 		query.append(");");
-
+		System.out.println(query.toString());
 		return query.toString();
 	}
 
 	public String getSelectAllQuery() {
-//		return SQLCreator.getSelectAllEntriesFromTableSQL(tableName, id, name, description, createdDate,
-//				lastTrackedDate, totalMinutesTracked);
-
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT * FROM " + tableName + ";");
 		return query.toString();
 	}
 
 	public String insertNewActivityQuery(String aName, String aDescription) {
-//		return SQLCreator.getInsertNewEntryIntoTableQuery(tableName, name, description);
 		StringBuilder query = new StringBuilder();
 
 		query.append("INSERT INTO " + tableName + " (" + name + "," + description + ")");
@@ -68,25 +63,14 @@ public class ActivityDatabaseHelper {
 		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(getSelectAllQuery())) {
 			// loop through the result set
 			while (rs.next()) {
-				Activity a = new Activity(rs.getInt(id), rs.getString(name), rs.getString(description),
-						new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(createdDate)),
-						new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(lastTrackedDate)),
-						rs.getInt(totalMinutesTracked));
-				activities.add(a);
-				System.out.println(a.activityInformationToString());
+				Activity activity = getNextActivityOnResultSet(rs);
+				activities.add(activity);
+				System.out.println(activity.activityInformationToString());
 			}
 		}
 		return activities;
 	}
-//	public static String createProjectInfoTableSQL() {
-//
-//		String sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (\n " + id + " integer PRIMARY KEY,\n " + name
-//				+ " varchar NOT NULL,\n " + description + " text NOT NULL,\n " + createdDate
-//				+ " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n " + editedDate + " DATETIME DEFAULT CURRENT_TIMESTAMP \n "
-//				+ ");";
-//		System.out.println(sql);
-//		return sql;
-//	}
+
 
 	public Activity getActivityOnName(Connection aConn, String aName) {
 		Activity activity = null;
@@ -96,15 +80,22 @@ public class ActivityDatabaseHelper {
 			if (rs.next()) {
 				System.out.println("WE ARE CREATING A NEW ACTIVITY...");
 				System.out.println(rs.getInt(id) + "" + rs.getString(name));
-				activity = new Activity(rs.getInt(id), rs.getString(name), rs.getString(description),
-						new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(createdDate)),
-						new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(lastTrackedDate)),
-						rs.getInt(totalMinutesTracked));
+				activity = getNextActivityOnResultSet(rs);
 			}
 		} catch (SQLException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return activity;
+	}
+
+	// formatter
+	private Activity getNextActivityOnResultSet(ResultSet rs) throws SQLException, ParseException {
+		Activity activity;
+		activity = new Activity(rs.getInt(id), rs.getString(name), rs.getString(description),
+				LocalDateTime.parse(rs.getString(createdDate)),
+				LocalDateTime.parse(rs.getString(lastTrackedDate), formatter),
+				rs.getInt(totalMinutesTracked), rs.getInt(favorite) == 0 ? false : true);
 		return activity;
 	}
 

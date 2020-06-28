@@ -22,7 +22,7 @@ public class ActivityListview extends VBox {
 	final ObservableList<FXDisplayable> activities;
 
 	public ActivityListview(final ObservableList<FXDisplayable> aActivities, final MainController mainController) {
-		this.mainController = new MainController();
+		this.mainController = mainController;
 		activities = aActivities;
 		handleObservableListChange();
 		setActivities();

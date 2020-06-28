@@ -1,0 +1,22 @@
+TODO::
+Uppdatera tray icon hover message ifall vi har en aktiv aktivitet som vi trackar / är pausad.
+Lägg till ett menyval för att att pausa/återupta aktivitet.
+Lägg till att spara activityRecord
+Lägg till att visa history med activity och activity records
+Lägg till att kunna sätta favoriter i history vyn
+Lägg till att kunna visa favoriter
+Lägg till propertiesfönstret -> save directory (dir chooser) 
+Lägg till att databasen ska få namnet ActivityTracker-yyyy-mm-dd-hh-mm-ss
+
+
+Senare, lägg till att kunna exportera activitshistory från de senaste 1 till X dagarna.
+Lägg till att kunna visa statistik,
+	mest jobbade på,
+	senast jobbade på,
+	flest gånger jobbat på,
+	minuter trackad per dag, vecka och månad.
+
+
+About window?
+socials links and so on.
+länken att det får användas hur som men inte säljas och inte claima som ens egen.

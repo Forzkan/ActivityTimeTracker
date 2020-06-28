@@ -21,9 +21,9 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
 	public DatabaseConnectionImpl(String aDatabasePath, boolean aCreate) {
 		database = stringPathToConnectionString(aDatabasePath);
 		// Create a new database if one does not exist.. if aCreate is true.
-		if (aCreate && connect() == null) {
+		// if (aCreate && connect() == null) {
 			createNewDatabase();
-		}
+		// }
 	}
 
 	/**
